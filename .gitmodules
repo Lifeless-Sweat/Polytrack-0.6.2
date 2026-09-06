@@ -1,3 +1,6 @@
+[submodule "src/polysim"]
+	path = src/polysim
+	url = https://github.com/SpideyZac/polysim.git
 [submodule "src/polyworld"]
 	path = src/polyworld
 	url = https://github.com/SpideyZac/polyworld.git
