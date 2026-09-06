@@ -1,0 +1,6 @@
+[submodule "src/polyworld"]
+	path = src/polyworld
+	url = https://github.com/SpideyZac/polyworld.git
+[submodule "src/polynav~"]
+	path = src/polynav~
+	url = https://github.com/SpideyZac/polynav.git
