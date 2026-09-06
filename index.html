@@ -1,20 +1,21 @@
-<!doctype html><html><head><meta charset="utf-8"><link rel="preload" href="forced_square.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="images/logo.svg" as="image" type="image/svg+xml"/><link rel="preload" href="images/discord.svg" as="image" type="image/svg+xml"/><link rel="manifest" href="manifest.json"/><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no"><script defer="defer" src="error_screen.bundle.js"></script><script defer="defer" src="main.bundle.js"></script></head><body><canvas id="screen"></canvas><div id="ui"></div><div id="transition-layer"></div>  <script type="module">
-    import initPolysim from './src/polysim/pkg/polysim.js';
-    import initPolyworld from './src/polyworld/pkg/polyworld.js';
-    import initPolynav from './src/polynav/pkg/polynav.js';
-
-    async function startWasm() {
+<!doctype html><html><head><meta charset="utf-8"><link rel="preload" href="forced_square.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="images/logo.svg" as="image" type="image/svg+xml"/><link rel="preload" href="images/discord.svg" as="image" type="image/svg+xml"/><link rel="manifest" href="manifest.json"/><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no"><script defer="defer" src="error_screen.bundle.js"></script><script defer="defer" src="main.bundle.js"></script></head><body><canvas id="screen"></canvas><div id="ui"></div><div id="transition-layer"></div>  
+  <script type="module">
+    async function loadWasmModule(path, name) {
       try {
-        await Promise.all([
-          initPolysim(),
-          initPolyworld(),
-          initPolynav()
-        ]);
-        console.log("WASM Submodules Loaded Successfully!");
+        const mod = await import(path);
+        if (mod.default) await mod.default();
+        console.log(`[WASM] ${name} loaded successfully!`);
       } catch (e) {
-        console.warn("WASM initializers skipped or building:", e);
+        console.warn(`[WASM] ${name} not available at ${path} (404 expected if unbuilt)`);
       }
     }
-    startWasm();
+
+    async function initAllWasm() {
+      await loadWasmModule('./src/polysim/pkg/polysim.js', 'polysim');
+      await loadWasmModule('./src/polyworld/pkg/polyworld.js', 'polyworld');
+      await loadWasmModule('./src/polynav/pkg/polynav.js', 'polynav');
+    }
+
+    initAllWasm();
   </script>
 </body></html>
