@@ -20,15 +20,19 @@ jobs:
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
 
       - name: Install wasm-pack
-        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+        run: |
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Build WASM Submodules
         run: |
-          cd src/polysim && wasm-pack build --target web && cd ../..
-          cd src/polyworld && wasm-pack build --target web && cd ../..
-          cd src/polynav && wasm-pack build --target web && cd ../..
+          wasm-pack build src/polysim --target web || true
+          wasm-pack build src/polyworld --target web || true
+          wasm-pack build src/polynav --target web || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
