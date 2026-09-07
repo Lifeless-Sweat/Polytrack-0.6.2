@@ -18,4 +18,131 @@
 
     initAllWasm();
   </script>
-</body></html>
+
+  <style>
+    #polyai-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 9999;
+      padding: 8px 16px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border: 1px solid #45475a;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+    #polyai-btn:hover { background: #313244; }
+    #polyai-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      background: #11111b;
+      border: 2px solid #45475a;
+      border-radius: 8px;
+      z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    }
+    #polyai-modal iframe {
+      width: 100%;
+      height: calc(100% - 35px);
+      border: none;
+    }
+    #polyai-modal-header {
+      height: 35px;
+      background: #181825;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      color: #cdd6f4;
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+    #polyai-close {
+      cursor: pointer;
+      font-weight: bold;
+      color: #f38ba8;
+    }
+  </style>
+
+  <button id="polyai-btn" onclick="document.getElementById('polyai-modal').style.display='block'">🤖 PolyAI Viewer</button>
+
+  <div id="polyai-modal">
+    <div id="polyai-modal-header">
+      <span>PolyAI Replay Viewer</span>
+      <span id="polyai-close" onclick="document.getElementById('polyai-modal').style.display='none'">✕ Close</span>
+    </div>
+    <iframe src="./src/polyai/replay_viewer/index.html"></iframe>
+  </div>
+<!-- PolyAI UI Overlay -->
+  <style>
+    #polyai-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 9999;
+      padding: 8px 16px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border: 1px solid #45475a;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+    #polyai-btn:hover { background: #313244; }
+    #polyai-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      background: #11111b;
+      border: 2px solid #45475a;
+      border-radius: 8px;
+      z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    }
+    #polyai-modal iframe {
+      width: 100%;
+      height: calc(100% - 35px);
+      border: none;
+    }
+    #polyai-modal-header {
+      height: 35px;
+      background: #181825;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      color: #cdd6f4;
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+    #polyai-close {
+      cursor: pointer;
+      font-weight: bold;
+      color: #f38ba8;
+    }
+  </style>
+
+  <button id="polyai-btn" onclick="document.getElementById('polyai-modal').style.display='block'">🤖 PolyAI Viewer</button>
+
+  <div id="polyai-modal">
+    <div id="polyai-modal-header">
+      <span>PolyAI Replay Viewer</span>
+      <span id="polyai-close" onclick="document.getElementById('polyai-modal').style.display='none'">✕ Close</span>
+    </div>
+    <iframe src="./src/polyai/replay_viewer/index.html"></iframe>
+  </div>
+</body>
+</html>
