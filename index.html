@@ -27,14 +27,13 @@
     }
 
     async function initAllWasm() {
-      // Optional WASM module loader
       await loadWasmModule('./src/polyai/replay_viewer/lib/draco/draco_wasm_wrapper.js', 'draco');
     }
 
     initAllWasm();
   </script>
 
-  <!-- PolyAI UI Overlay Styles -->
+  <!-- PolyAI Launcher Button Styling -->
   <style>
     #polyai-btn {
       position: fixed;
@@ -49,73 +48,19 @@
       font-weight: bold;
       cursor: pointer;
       font-family: sans-serif;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: background 0.2s ease, transform 0.1s ease;
     }
     #polyai-btn:hover { 
       background: #313244; 
+      transform: translateY(-1px);
     }
-    #polyai-modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 85%;
-      height: 85%;
-      background: #11111b;
-      border: 2px solid #45475a;
-      border-radius: 8px;
-      z-index: 10000;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    }
-    #polyai-modal iframe {
-      width: 100%;
-      height: calc(100% - 35px);
-      border: none;
-    }
-    #polyai-modal-header {
-      height: 35px;
-      background: #181825;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 12px;
-      color: #cdd6f4;
-      font-family: sans-serif;
-      font-size: 14px;
-    }
-    #polyai-close {
-      cursor: pointer;
-      font-weight: bold;
-      color: #f38ba8;
+    #polyai-btn:active {
+      transform: translateY(0);
     }
   </style>
 
-  <!-- PolyAI Trigger Button -->
-  <button id="polyai-btn" onclick="openPolyAI()">🤖 PolyAI Viewer</button>
-
-  <!-- PolyAI Modal Container -->
-  <div id="polyai-modal">
-    <div id="polyai-modal-header">
-      <span>PolyAI Replay Viewer</span>
-      <span id="polyai-close" onclick="closePolyAI()">✕ Close</span>
-    </div>
-    <iframe id="polyai-frame" src="about:blank"></iframe>
-  </div>
-
-  <!-- Dynamic Lazy Loading Script -->
-  <script>
-    function openPolyAI() {
-      const frame = document.getElementById('polyai-frame');
-      if (frame.src === 'about:blank' || frame.src.endsWith('about:blank')) {
-        frame.src = './src/polyai/replay_viewer/index.html';
-      }
-      document.getElementById('polyai-modal').style.display = 'block';
-    }
-
-    function closePolyAI() {
-      document.getElementById('polyai-modal').style.display = 'none';
-      document.getElementById('polyai-frame').src = 'about:blank';
-    }
-  </script>
+  <!-- PolyAI Launcher Button -->
+  <button id="polyai-btn" onclick="window.open('./src/polyai/replay_viewer/index.html', 'PolyAIReplayViewer', 'width=1280,height=720')">🤖 Open PolyAI Viewer</button>
 </body>
 </html>
