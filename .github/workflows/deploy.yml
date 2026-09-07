@@ -30,9 +30,9 @@ jobs:
 
       - name: Build WASM Submodules
         run: |
-          wasm-pack build src/polysim --target web || true
-          wasm-pack build src/polyworld --target web || true
-          wasm-pack build src/polynav --target web || true
+          cd src/polysim && wasm-pack build --target web --out-dir pkg && cd ../..
+          cd src/polyworld && wasm-pack build --target web --out-dir pkg && cd ../..
+          cd src/polynav && wasm-pack build --target web --out-dir pkg && cd ../..
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
