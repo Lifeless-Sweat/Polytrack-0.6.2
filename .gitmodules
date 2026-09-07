@@ -1,9 +1,3 @@
-[submodule "src/polysim"]
-	path = src/polysim
-	url = https://github.com/SpideyZac/polysim.git
-[submodule "src/polyworld"]
-	path = src/polyworld
-	url = https://github.com/SpideyZac/polyworld.git
-[submodule "src/polynav"]
-	path = src/polynav
-	url = https://github.com/SpideyZac/polynav.git
+[submodule "src/polyai"]
+	path = src/polyai
+	url = https://github.com/SpideyZac/polyai.git
