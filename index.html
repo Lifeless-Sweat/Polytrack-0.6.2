@@ -1,4 +1,20 @@
-<!doctype html><html><head><meta charset="utf-8"><link rel="preload" href="forced_square.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="images/logo.svg" as="image" type="image/svg+xml"/><link rel="preload" href="images/discord.svg" as="image" type="image/svg+xml"/><link rel="manifest" href="manifest.json"/><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no"><script defer="defer" src="error_screen.bundle.js"></script><script defer="defer" src="main.bundle.js"></script></head><body><canvas id="screen"></canvas><div id="ui"></div><div id="transition-layer"></div>  
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="preload" href="forced_square.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+  <link rel="preload" href="images/logo.svg" as="image" type="image/svg+xml"/>
+  <link rel="preload" href="images/discord.svg" as="image" type="image/svg+xml"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+  <script defer="defer" src="error_screen.bundle.js"></script>
+  <script defer="defer" src="main.bundle.js"></script>
+</head>
+<body>
+  <canvas id="screen"></canvas>
+  <div id="ui"></div>
+  <div id="transition-layer"></div>  
+
   <script type="module">
     async function loadWasmModule(path, name) {
       try {
@@ -6,19 +22,19 @@
         if (mod.default) await mod.default();
         console.log(`[WASM] ${name} loaded successfully!`);
       } catch (e) {
-        console.warn(`[WASM] ${name} not available at ${path} (404 expected if unbuilt)`);
+        console.warn(`[WASM] ${name} not available at ${path}`);
       }
     }
 
     async function initAllWasm() {
-      await loadWasmModule('./src/polysim/pkg/polysim.js', 'polysim');
-      await loadWasmModule('./src/polyworld/pkg/polyworld.js', 'polyworld');
-      await loadWasmModule('./src/polynav/pkg/polynav.js', 'polynav');
+      // Optional WASM module loader
+      await loadWasmModule('./src/polyai/replay_viewer/lib/draco/draco_wasm_wrapper.js', 'draco');
     }
 
     initAllWasm();
   </script>
 
+  <!-- PolyAI UI Overlay Styles -->
   <style>
     #polyai-btn {
       position: fixed;
@@ -34,15 +50,17 @@
       cursor: pointer;
       font-family: sans-serif;
     }
-    #polyai-btn:hover { background: #313244; }
+    #polyai-btn:hover { 
+      background: #313244; 
+    }
     #polyai-modal {
       display: none;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80%;
-      height: 80%;
+      width: 85%;
+      height: 85%;
       background: #11111b;
       border: 2px solid #45475a;
       border-radius: 8px;
@@ -72,77 +90,32 @@
     }
   </style>
 
-  <button id="polyai-btn" onclick="document.getElementById('polyai-modal').style.display='block'">🤖 PolyAI Viewer</button>
+  <!-- PolyAI Trigger Button -->
+  <button id="polyai-btn" onclick="openPolyAI()">🤖 PolyAI Viewer</button>
 
+  <!-- PolyAI Modal Container -->
   <div id="polyai-modal">
     <div id="polyai-modal-header">
       <span>PolyAI Replay Viewer</span>
-      <span id="polyai-close" onclick="document.getElementById('polyai-modal').style.display='none'">✕ Close</span>
+      <span id="polyai-close" onclick="closePolyAI()">✕ Close</span>
     </div>
-    <iframe src="./src/polyai/replay_viewer/index.html"></iframe>
+    <iframe id="polyai-frame" src="about:blank"></iframe>
   </div>
-<!-- PolyAI UI Overlay -->
-  <style>
-    #polyai-btn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      z-index: 9999;
-      padding: 8px 16px;
-      background: #1e1e2e;
-      color: #cdd6f4;
-      border: 1px solid #45475a;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: sans-serif;
-    }
-    #polyai-btn:hover { background: #313244; }
-    #polyai-modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
-      height: 80%;
-      background: #11111b;
-      border: 2px solid #45475a;
-      border-radius: 8px;
-      z-index: 10000;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    }
-    #polyai-modal iframe {
-      width: 100%;
-      height: calc(100% - 35px);
-      border: none;
-    }
-    #polyai-modal-header {
-      height: 35px;
-      background: #181825;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 12px;
-      color: #cdd6f4;
-      font-family: sans-serif;
-      font-size: 14px;
-    }
-    #polyai-close {
-      cursor: pointer;
-      font-weight: bold;
-      color: #f38ba8;
-    }
-  </style>
 
-  <button id="polyai-btn" onclick="document.getElementById('polyai-modal').style.display='block'">🤖 PolyAI Viewer</button>
+  <!-- Dynamic Lazy Loading Script -->
+  <script>
+    function openPolyAI() {
+      const frame = document.getElementById('polyai-frame');
+      if (frame.src === 'about:blank' || frame.src.endsWith('about:blank')) {
+        frame.src = './src/polyai/replay_viewer/index.html';
+      }
+      document.getElementById('polyai-modal').style.display = 'block';
+    }
 
-  <div id="polyai-modal">
-    <div id="polyai-modal-header">
-      <span>PolyAI Replay Viewer</span>
-      <span id="polyai-close" onclick="document.getElementById('polyai-modal').style.display='none'">✕ Close</span>
-    </div>
-    <iframe src="./src/polyai/replay_viewer/index.html"></iframe>
-  </div>
+    function closePolyAI() {
+      document.getElementById('polyai-modal').style.display = 'none';
+      document.getElementById('polyai-frame').src = 'about:blank';
+    }
+  </script>
 </body>
 </html>
